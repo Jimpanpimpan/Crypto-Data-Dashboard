@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Crypto Dashboard{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav>
+        <div class="nav-brand">💰 Crypto Dashboard</div>
+        <div class="nav-links">
+            {% if current_user.is_authenticated %}
+                <span class="welcome-msg">Welcome, {{ current_user.username }}!</span>
+                <a href="{{ url_for('main.index') }}">Home</a>
+                <a href="{{ url_for('dashboard.dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('security.logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('main.index') }}">Home</a>
+                <a href="{{ url_for('security.login') }}">Login</a>
+                <a href="{{ url_for('security.register') }}">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Page Content -->
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Crypto Dashboard. Built by Jimmy</p>
+    </footer>
+</body>
+</html>

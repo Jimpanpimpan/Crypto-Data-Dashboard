@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Crypto Dashboard{% endblock %}
+
+{% block content %}
+
+<h1>My Crypto Assets</h1>
+
+<form method = 'post' action="{{ url_for('dashboard.search')}}">
+    <input type="text" name="query" placeholder="Search cryptocurrencies">
+    <button type="submit">Search</button>
+</form>
+
+{% if assets %} 
+<table>
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Symbol
+            </th>
+            <th>
+                Price
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for asset in assets %}
+        <tr>
+            <td>
+                {{ asset.name }}
+            </td>
+            <td>
+                {{ asset.symbol }}
+            </td>
+            <td>
+                {{ asset.current_price }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<h2>You haven't added any assets</h2>
+{% endif %}
+{% endblock %}

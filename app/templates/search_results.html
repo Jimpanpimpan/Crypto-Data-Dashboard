@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<h1>Search results for "{{ query }}"</h1>
+
+{% if results %}
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Symbol</th>
+                <th>Add</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for coin in results %}
+            <tr>
+                <td>{{ coin['name'] }}</td>
+                <td>{{ coin['symbol'] }}</td>
+
+                <td>
+                    <form method="POST" action="{{ url_for('dashboard.add_asset') }}">
+                        <input type="hidden" name="query" value="{{ coin['id'] }}">
+                        <input type="hidden" name="name" value="{{ coin['name'] }}">
+                        <input type="hidden" name="symbol" value="{{ coin['symbol'] }}">
+                        <button type="submit">Add</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No results found.</p>
+{% endif %}
+{% endblock %}
