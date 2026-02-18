@@ -70,7 +70,3 @@ instance/
 # OS files
 .DS_Store
 Thumbs.db
-
-# Temporary files
-*.update
-tmp*-cwd
