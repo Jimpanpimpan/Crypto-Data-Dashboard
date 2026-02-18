@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% from 'macros/pagination.html' import render_pagination %}
 {% block title %}Dashboard - Crypto Dashboard{% endblock %}
 
 {% block content %}
@@ -11,7 +11,7 @@
     <button type="submit">Search</button>
 </form>
 
-{% if assets %} 
+{% if pagination.items %} 
 <table>
     <thead>
         <tr>
@@ -23,6 +23,9 @@
             </th>
             <th>
                 Price
+            </th>
+            <th>
+                Remove
             </th>
         </tr>
     </thead>
@@ -38,10 +41,17 @@
             <td>
                 {{ asset.current_price }}
             </td>
+            <td>
+                <form method='POST' action="{{ url_for('dashboard.remove_asset', asset_id=asset.id)}}"
+                    onsubmit="return confirm('Are you sure you want to remove {{ asset.name }}?');">
+                    <button type="submit">Remove</button>
+                </form>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+{{ render_pagination(pagination, 'dashboard.dashboard') }}
 {% else %}
 <h2>You haven't added any assets</h2>
 {% endif %}

@@ -32,6 +32,17 @@
             {% endfor %}
         </tbody>
     </table>
+    
+    <div class="pagination">
+        {% if page > 1 %}
+            <a href="{{ url_for('dashboard.search', page=page-1, query=query) }}">Previous</a>
+        {% endif %}
+        <span>Page {{ page }} of {{ total_pages }}</span>
+        {% if page < total_pages %}
+            <a href="{{ url_for('dashboard.search', page=page+1, query=query) }}">Next</a>
+        {% endif %}
+    </div>
+
 {% else %}
     <p>No results found.</p>
 {% endif %}
